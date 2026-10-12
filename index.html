@@ -3,21 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Talk 'N Active | Parent Portal</title>
+    <title>Talk 'N Active | Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // Custom Brand Colors injected into Tailwind
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            red: '#F25C54',      // The coral/red from "TALK"
-                            darkred: '#B54D43',  // The deep red from the right arrow
-                            yellow: '#F4D35E',   // The yellow from "ACTIVE"
-                            black: '#1A1A1A'     // The black from "'N"
-                        }
-                    }
+                        brand: { red: '#F25C54', darkred: '#B54D43', yellow: '#F4D35E', black: '#1A1A1A' }
+                    },
+                    animation: { 'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite' }
                 }
             }
         }
@@ -36,9 +31,8 @@
     <!-- Top Header -->
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-md mx-auto px-4 py-3 flex justify-between items-center">
-            <!-- Brand Logo in Header -->
-            <img src="Header.png" alt="Talk 'N Active" class="h-8 object-contain">
-            <button onclick="toggleLanguage()" class="bg-gray-50 px-3 py-1.5 rounded-full text-xs font-bold text-gray-600 border border-gray-200 active:bg-gray-200 transition shadow-sm">
+            <img src="Header.png" alt="Talk 'N Active" class="h-8 object-contain cursor-pointer" onclick="showView('landing')">
+            <button onclick="toggleLanguage()" class="bg-gray-50 px-3 py-1.5 rounded-full text-xs font-bold text-gray-600 border border-gray-200 shadow-sm">
                 <span id="langIndicator">🇮🇩 ID</span>
             </button>
         </div>
@@ -46,11 +40,81 @@
 
     <main class="flex-grow max-w-md mx-auto w-full p-4 relative">
         
-        <!-- LOGIN VIEW -->
-        <div id="loginView" class="bg-white p-8 rounded-3xl shadow-lg shadow-brand-red/5 border border-gray-100 mt-6">
+        <!-- 1. LANDING PAGE VIEW -->
+        <div id="landingView" class="text-center mt-10 animate-fade-in">
+            <img src="Header.png" alt="Logo" class="h-20 mx-auto mb-6 object-contain">
+            <h1 class="text-3xl font-extrabold text-brand-black mb-2" id="landingTitle">Future-Ready Skills</h1>
+            <p class="text-gray-500 font-medium mb-10" id="landingSubtitle">Coding & English programs designed to empower young minds.</p>
+            
+            <div class="space-y-4">
+                <button onclick="showView('trial')" class="w-full bg-brand-yellow text-brand-black font-extrabold py-4 px-4 rounded-xl hover:bg-yellow-400 transition shadow-lg shadow-brand-yellow/40 flex justify-center items-center">
+                    <span id="btnBookTrial">Book a Free Trial</span>
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+                <button onclick="showView('login')" class="w-full bg-white border-2 border-gray-200 text-gray-700 font-bold py-4 px-4 rounded-xl hover:border-brand-red hover:text-brand-red transition flex justify-center items-center">
+                    <span id="btnPortalAccess">Parent / Student Portal</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. TRIAL BOOKING FORM VIEW -->
+        <div id="trialView" class="hidden bg-white p-6 rounded-3xl shadow-lg shadow-brand-red/5 border border-gray-100 mt-4">
+            <button onclick="showView('landing')" class="text-gray-400 hover:text-brand-red flex items-center text-sm font-bold mb-4">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <span id="btnBack">Back</span>
+            </button>
+            <h2 class="text-2xl font-extrabold text-brand-black mb-6" id="trialHeading">Book Free Trial</h2>
+            
+            <div id="trialAlert" class="hidden mb-4 p-3 rounded-xl text-sm text-center font-medium"></div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1" id="lblParentName">Parent Name</label>
+                    <input type="text" id="tParentName" class="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-brand-red outline-none">
+                </div>
+                <div class="flex space-x-3">
+                    <div class="flex-grow">
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1" id="lblChildName">Child Name</label>
+                        <input type="text" id="tChildName" class="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-brand-red outline-none">
+                    </div>
+                    <div class="w-1/3">
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1" id="lblAge">Age</label>
+                        <input type="number" id="tAge" class="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-brand-red outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1" id="lblWhatsapp">WhatsApp Number</label>
+                    <input type="tel" id="tWhatsapp" class="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-brand-red outline-none" placeholder="0812...">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1" id="lblProgram">Program</label>
+                    <select id="tProgram" class="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-brand-red outline-none">
+                        <option value="Coding">Coding Class</option>
+                        <option value="English">English Class</option>
+                        <option value="Both">Both (Coding & English)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1" id="lblTiming">Preferred Timing</label>
+                    <select id="tTiming" class="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-brand-red outline-none">
+                        <option value="Weekday Afternoon" id="optWeekday">Weekday Afternoon (15:00 - 17:00)</option>
+                        <option value="Weekend Morning" id="optWeekend">Weekend Morning (09:00 - 12:00)</option>
+                    </select>
+                </div>
+                <button onclick="submitTrial()" class="w-full bg-brand-red text-white font-bold py-4 px-4 rounded-xl hover:bg-brand-darkred transition flex justify-center items-center mt-2 shadow-lg shadow-brand-red/30">
+                    <span id="btnSubmitTrial">Request Schedule</span>
+                    <div id="trialLoader" class="loader hidden ml-2 border-t-white"></div>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 3. LOGIN VIEW -->
+        <div id="loginView" class="hidden bg-white p-8 rounded-3xl shadow-lg shadow-brand-red/5 border border-gray-100 mt-6">
+             <button onclick="showView('landing')" class="text-gray-400 hover:text-brand-red flex items-center text-sm font-bold mb-6">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <span class="btnBackText">Back</span>
+            </button>
             <div class="text-center mb-8">
-                <!-- Large Brand Logo on Login -->
-                <img src="Header.png" alt="Talk 'N Active Logo" class="h-16 mx-auto mb-4 object-contain">
                 <h2 class="text-2xl font-extrabold text-brand-black" id="loginHeading">Welcome Back</h2>
                 <p class="text-brand-darkred font-medium text-sm mt-1 italic" id="loginSubheading">Empowering Minds, Inspiring Futures</p>
             </div>
@@ -59,41 +123,42 @@
             
             <div class="space-y-5">
                 <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5" id="labelStudentId">Student ID</label>
-                    <input type="text" id="studentIdInput" class="w-full px-4 py-3.5 bg-gray-50 rounded-xl border border-gray-200 focus:bg-white focus:border-brand-red focus:ring-2 focus:ring-brand-red/20 outline-none uppercase transition font-medium text-brand-black" placeholder="e.g. STU-001">
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5" id="labelStudentId">Student ID</label>
+                    <input type="text" id="studentIdInput" class="w-full px-4 py-3.5 bg-gray-50 rounded-xl border border-gray-200 focus:bg-white focus:border-brand-red outline-none uppercase font-medium">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5" id="labelPin">Security PIN</label>
-                    <input type="password" id="pinInput" class="w-full px-4 py-3.5 bg-gray-50 rounded-xl border border-gray-200 focus:bg-white focus:border-brand-red focus:ring-2 focus:ring-brand-red/20 outline-none transition font-medium text-brand-black" placeholder="••••••" inputmode="numeric" pattern="[0-9]*">
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1.5" id="labelPin">Security PIN</label>
+                    <input type="password" id="pinInput" class="w-full px-4 py-3.5 bg-gray-50 rounded-xl border border-gray-200 focus:bg-white focus:border-brand-red outline-none font-medium" inputmode="numeric" pattern="[0-9]*">
                 </div>
-                <button onclick="attemptLogin()" class="w-full bg-brand-red text-white font-bold py-4 px-4 rounded-xl hover:bg-brand-darkred transition flex justify-center items-center shadow-lg shadow-brand-red/30 mt-2">
+                <button onclick="attemptLogin()" class="w-full bg-brand-red text-white font-bold py-4 px-4 rounded-xl hover:bg-brand-darkred transition flex justify-center items-center shadow-lg shadow-brand-red/30">
                     <span id="loginBtnText">Access Portal</span>
                     <div id="loginLoader" class="loader hidden ml-2 border-t-white"></div>
                 </button>
             </div>
         </div>
 
-        <!-- DASHBOARD VIEW -->
+        <!-- 4. DASHBOARD VIEW -->
         <div id="dashboardView" class="hidden pb-20 mt-2">
-            <!-- Brand Gradient Welcome Card -->
-            <div class="bg-gradient-to-br from-brand-red to-brand-darkred rounded-3xl p-6 text-white mb-6 shadow-xl shadow-brand-red/20 relative overflow-hidden">
+            
+            <!-- JOIN CLASS BUTTON (Hidden if no link) -->
+            <a href="#" target="_blank" id="btnJoinClass" class="hidden w-full bg-green-500 hover:bg-green-600 text-white font-extrabold py-4 px-4 rounded-2xl mb-4 shadow-lg shadow-green-500/30 flex justify-center items-center animate-pulse-fast transition">
+                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                <span id="textJoinClass">Join Online Class Now</span>
+            </a>
+
+            <!-- Welcome Card -->
+            <div class="bg-gradient-to-br from-brand-red to-brand-darkred rounded-3xl p-6 text-white mb-6 shadow-xl relative overflow-hidden">
                 <div class="relative z-10">
-                    <p class="text-brand-yellow font-bold text-xs uppercase tracking-widest mb-1" id="dashWelcome">Welcome, Parent of</p>
+                    <p class="text-brand-yellow font-bold text-xs uppercase tracking-widest mb-1" id="dashWelcome">Welcome,</p>
                     <h2 class="text-3xl font-extrabold mt-1 tracking-tight" id="studentNameDisplay">Student Name</h2>
                 </div>
-                <!-- Abstract teardrop decoration mimicking the logo -->
                 <div class="absolute -top-6 -right-6 w-32 h-32 bg-brand-yellow opacity-20 rounded-full blur-2xl"></div>
-                <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
             </div>
 
-            <!-- Tab Navigation -->
+            <!-- Tabs -->
             <div class="flex bg-gray-200/50 p-1.5 rounded-2xl mb-6">
-                <button onclick="switchTab('logs')" id="tabLogs" class="flex-1 py-2.5 text-sm font-bold rounded-xl bg-white shadow-sm text-brand-red transition">
-                    Daily Logs
-                </button>
-                <button onclick="switchTab('reports')" id="tabReports" class="flex-1 py-2.5 text-sm font-bold rounded-xl text-gray-500 hover:text-gray-800 transition">
-                    Progress Reports
-                </button>
+                <button onclick="switchTab('logs')" id="tabLogs" class="flex-1 py-2.5 text-sm font-bold rounded-xl bg-white shadow-sm text-brand-red transition">Daily Logs</button>
+                <button onclick="switchTab('reports')" id="tabReports" class="flex-1 py-2.5 text-sm font-bold rounded-xl text-gray-500 hover:text-gray-800 transition">Progress Reports</button>
             </div>
 
             <div id="dashboardContent" class="min-h-[300px] relative">
@@ -107,10 +172,10 @@
         </div>
     </main>
 
-    <!-- Bottom Navigation -->
+    <!-- Bottom Nav for Logout -->
     <div id="bottomNav" class="hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 pb-safe pb-6 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-50">
         <div class="max-w-md mx-auto flex justify-center">
-             <button onclick="logout()" class="flex items-center text-gray-500 font-bold px-6 py-2.5 rounded-full hover:bg-gray-50 hover:text-brand-darkred transition">
+             <button onclick="logout()" class="flex items-center text-gray-500 font-bold px-6 py-2.5 rounded-full hover:bg-gray-50 transition">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                 <span id="logoutText">Sign Out</span>
             </button>
@@ -118,31 +183,53 @@
     </div>
 
     <script>
-        // --- PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE ---
-        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzygNz175ygrpne2aZiJOHhhtj4u8uVGM0UgsS_kMh6wqXqOxyBCPWcMPBJednTHa1Wxg/exec';
-        // --------------------------------------------------------
+        // --- PASTE YOUR *NEW* GOOGLE APPS SCRIPT WEB APP URL HERE ---
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzV9_zTVqJ_UHCkqatObq-zw9BXypRHD2qjTd6Lj4bcBVaRyPW-y6K80THnwCfUu_LaSw/exec';
+        // -------------------------------------------------------------
 
         let currentLang = 'en';
         let loggedInStudentId = null;
 
         const dict = {
             'en': {
-                langBtn: '🇮🇩 ID', loginHeading: 'Welcome Back', loginSubheading: 'Empowering Minds, Inspiring Futures',
-                labelId: 'Student ID', labelPin: 'Security PIN', loginBtn: 'Access Portal', welcomeMsg: 'Welcome, Parent of',
-                tabLogs: 'Daily Logs', tabReports: 'Progress Reports', loadingText: 'Fetching records...', logoutText: 'Sign Out',
+                langBtn: '🇮🇩 ID',
+                // Landing & Trial
+                landingTitle: 'Future-Ready Skills', landingSubtitle: 'Coding & English programs designed to empower young minds.',
+                btnBookTrial: 'Book a Free Trial', btnPortalAccess: 'Parent / Student Portal',
+                btnBack: 'Back', trialHeading: 'Book Free Trial', lblParentName: 'Parent Name',
+                lblChildName: 'Child Name', lblAge: 'Age', lblWhatsapp: 'WhatsApp Number',
+                lblProgram: 'Program', lblTiming: 'Preferred Timing', btnSubmitTrial: 'Request Schedule',
+                optWeekday: 'Weekday Afternoon (15:00 - 17:00)', optWeekend: 'Weekend Morning (09:00 - 12:00)',
+                msgTrialSuccess: 'Success! We will WhatsApp you shortly.', msgTrialError: 'Please fill all fields.',
+                // Portal
+                loginHeading: 'Welcome Back', loginSubheading: 'Empowering Minds, Inspiring Futures',
+                labelId: 'Student ID', labelPin: 'Security PIN', loginBtn: 'Access Portal', 
+                welcomeMsg: 'Welcome,', tabLogs: 'Daily Logs', tabReports: 'Progress Reports', 
+                loadingText: 'Fetching records...', logoutText: 'Sign Out', textJoinClass: 'Join Online Class Now',
                 emptyLogs: 'No daily logs found.', emptyReports: 'No reports found.', downloadBtn: 'Download Full PDF Report',
                 errorEmpty: 'Please enter ID and PIN.', errorNetwork: 'Network error.', termLabel: 'Period',
-                programsLabel: 'Programs', summaryLabel: 'Teacher Notes', learnedLabel: 'Today I learned:',
+                summaryLabel: 'Teacher Notes', learnedLabel: 'Today I learned:',
                 projectLabel: 'Project:', problemLabel: 'Challenges Faced:', solutionLabel: 'How I Solved It:', 
                 viewDetails: 'View Details', viewProjectBtn: 'View Project Link'
             },
             'id': {
-                langBtn: '🇬🇧 EN', loginHeading: 'Selamat Datang', loginSubheading: 'Empowering Minds, Inspiring Futures',
-                labelId: 'ID Siswa', labelPin: 'PIN Keamanan', loginBtn: 'Masuk Portal', welcomeMsg: 'Orang Tua dari',
-                tabLogs: 'Jurnal Harian', tabReports: 'Rapor Belajar', loadingText: 'Mengambil data...', logoutText: 'Keluar',
+                langBtn: '🇬🇧 EN',
+                // Landing & Trial
+                landingTitle: 'Keterampilan Masa Depan', landingSubtitle: 'Program Coding & Bahasa Inggris untuk memberdayakan generasi muda.',
+                btnBookTrial: 'Daftar Kelas Coba Gratis', btnPortalAccess: 'Portal Orang Tua / Siswa',
+                btnBack: 'Kembali', trialHeading: 'Daftar Kelas Coba', lblParentName: 'Nama Orang Tua',
+                lblChildName: 'Nama Anak', lblAge: 'Umur', lblWhatsapp: 'Nomor WhatsApp',
+                lblProgram: 'Pilihan Program', lblTiming: 'Pilihan Waktu', btnSubmitTrial: 'Ajukan Jadwal',
+                optWeekday: 'Sore Hari Kerja (15:00 - 17:00)', optWeekend: 'Pagi Akhir Pekan (09:00 - 12:00)',
+                msgTrialSuccess: 'Berhasil! Kami akan menghubungi via WhatsApp.', msgTrialError: 'Mohon isi semua data.',
+                // Portal
+                loginHeading: 'Selamat Datang', loginSubheading: 'Empowering Minds, Inspiring Futures',
+                labelId: 'ID Siswa', labelPin: 'PIN Keamanan', loginBtn: 'Masuk Portal', 
+                welcomeMsg: 'Halo,', tabLogs: 'Jurnal Harian', tabReports: 'Rapor Belajar', 
+                loadingText: 'Mengambil data...', logoutText: 'Keluar', textJoinClass: 'Masuk Kelas Online Sekarang',
                 emptyLogs: 'Belum ada jurnal.', emptyReports: 'Belum ada rapor.', downloadBtn: 'Unduh Rapor PDF Lengkap',
                 errorEmpty: 'Mohon isi ID dan PIN.', errorNetwork: 'Gangguan jaringan.', termLabel: 'Periode',
-                programsLabel: 'Program', summaryLabel: 'Catatan Guru', learnedLabel: 'Hari ini saya belajar:',
+                summaryLabel: 'Catatan Guru', learnedLabel: 'Hari ini saya belajar:',
                 projectLabel: 'Proyek:', problemLabel: 'Tantangan yang Dihadapi:', solutionLabel: 'Cara Saya Menyelesaikan:',
                 viewDetails: 'Lihat Detail', viewProjectBtn: 'Lihat Link Proyek'
             }
@@ -153,6 +240,26 @@
         function applyLanguage() {
             const t = dict[currentLang];
             document.getElementById('langIndicator').innerText = t.langBtn;
+            
+            // Apply Landing & Trial
+            document.getElementById('landingTitle').innerText = t.landingTitle;
+            document.getElementById('landingSubtitle').innerText = t.landingSubtitle;
+            document.getElementById('btnBookTrial').innerText = t.btnBookTrial;
+            document.getElementById('btnPortalAccess').innerText = t.btnPortalAccess;
+            document.querySelectorAll('.btnBackText').forEach(el => el.innerText = t.btnBack);
+            document.getElementById('btnBack').innerText = t.btnBack;
+            document.getElementById('trialHeading').innerText = t.trialHeading;
+            document.getElementById('lblParentName').innerText = t.lblParentName;
+            document.getElementById('lblChildName').innerText = t.lblChildName;
+            document.getElementById('lblAge').innerText = t.lblAge;
+            document.getElementById('lblWhatsapp').innerText = t.lblWhatsapp;
+            document.getElementById('lblProgram').innerText = t.lblProgram;
+            document.getElementById('lblTiming').innerText = t.lblTiming;
+            document.getElementById('btnSubmitTrial').innerText = t.btnSubmitTrial;
+            document.getElementById('optWeekday').innerText = t.optWeekday;
+            document.getElementById('optWeekend').innerText = t.optWeekend;
+
+            // Apply Portal
             document.getElementById('loginHeading').innerText = t.loginHeading;
             document.getElementById('loginSubheading').innerText = t.loginSubheading;
             document.getElementById('labelStudentId').innerText = t.labelId;
@@ -163,7 +270,61 @@
             document.getElementById('tabReports').innerText = t.tabReports;
             document.getElementById('loadingText').innerText = t.loadingText;
             document.getElementById('logoutText').innerText = t.logoutText;
+            document.getElementById('textJoinClass').innerText = t.textJoinClass;
+
             if (loggedInStudentId) fetchDashboardData(loggedInStudentId); 
+        }
+
+        function showView(viewName) {
+            ['landingView', 'trialView', 'loginView', 'dashboardView', 'bottomNav'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(viewName + 'View').classList.remove('hidden');
+            if(viewName === 'dashboard') document.getElementById('bottomNav').classList.remove('hidden');
+        }
+
+        async function submitTrial() {
+            const payload = {
+                action: 'submitTrialForm',
+                parentName: document.getElementById('tParentName').value.trim(),
+                studentName: document.getElementById('tChildName').value.trim(),
+                age: document.getElementById('tAge').value.trim(),
+                whatsapp: document.getElementById('tWhatsapp').value.trim(),
+                program: document.getElementById('tProgram').value,
+                timing: document.getElementById('tTiming').value
+            };
+
+            const alertEl = document.getElementById('trialAlert');
+            const t = dict[currentLang];
+
+            if(!payload.parentName || !payload.studentName || !payload.whatsapp) {
+                alertEl.className = 'mb-4 p-3 bg-red-50 text-red-600 rounded-xl text-sm text-center font-bold block';
+                alertEl.innerText = t.msgTrialError;
+                return;
+            }
+
+            document.getElementById('btnSubmitTrial').classList.add('hidden');
+            document.getElementById('trialLoader').classList.remove('hidden');
+
+            try {
+                // Using text/plain (omitting Content-Type) prevents CORS preflight block in Apps Script
+                const res = await fetch(GAS_WEB_APP_URL, {
+                    method: 'POST', body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                
+                alertEl.className = 'mb-4 p-4 bg-green-50 text-green-700 border border-green-200 rounded-xl text-sm text-center font-bold block';
+                alertEl.innerText = t.msgTrialSuccess;
+                
+                // Clear form
+                ['tParentName', 'tChildName', 'tAge', 'tWhatsapp'].forEach(id => document.getElementById(id).value = '');
+            } catch (err) {
+                alertEl.className = 'mb-4 p-3 bg-red-50 text-red-600 rounded-xl text-sm text-center font-bold block';
+                alertEl.innerText = t.errorNetwork;
+            } finally {
+                document.getElementById('btnSubmitTrial').classList.remove('hidden');
+                document.getElementById('trialLoader').classList.add('hidden');
+            }
         }
 
         function switchTab(tab) {
@@ -185,9 +346,17 @@
                 if (data.success) {
                     loggedInStudentId = data.data.studentId;
                     document.getElementById('studentNameDisplay').innerText = data.data.studentName;
-                    document.getElementById('loginView').classList.add('hidden');
-                    document.getElementById('dashboardView').classList.remove('hidden');
-                    document.getElementById('bottomNav').classList.remove('hidden');
+                    
+                    // Handle Join Class Button
+                    const btnClass = document.getElementById('btnJoinClass');
+                    if(data.data.classLink) {
+                        btnClass.href = data.data.classLink.startsWith('http') ? data.data.classLink : 'https://' + data.data.classLink;
+                        btnClass.classList.remove('hidden');
+                    } else {
+                        btnClass.classList.add('hidden');
+                    }
+
+                    showView('dashboard');
                     fetchDashboardData(loggedInStudentId);
                 } else showError(data.message);
             } catch (err) { showError(dict[currentLang].errorNetwork); }
@@ -219,12 +388,11 @@
         function renderLogs(logs) {
             const container = document.getElementById('logsContent');
             const t = dict[currentLang];
-            if (!logs.length) return container.innerHTML = `<div class="text-center p-8 text-gray-400 bg-white rounded-2xl border border-gray-100">${t.emptyLogs}</div>`;
+            if (!logs.length) return container.innerHTML = `<div class="text-center p-8 text-gray-400 bg-white rounded-2xl border border-gray-100 font-medium">${t.emptyLogs}</div>`;
 
             let html = '';
             logs.forEach((log, i) => {
                 const hasDetails = log.problemFaced || log.solution || log.projectName;
-                
                 let linkHtml = '';
                 if(log.projectLink && log.projectLink.trim() !== "") {
                     let safeLink = log.projectLink.startsWith('http') ? log.projectLink : 'https://' + log.projectLink;
@@ -245,15 +413,15 @@
                     
                     ${hasDetails ? `
                     <div class="border-t border-gray-100 pt-3 mt-2">
-                        <button onclick="toggleAccordion(${i})" class="flex items-center justify-between w-full text-xs font-bold text-brand-red hover:text-brand-darkred transition">
+                        <button onclick="toggleAccordion(${i})" class="flex items-center justify-between w-full text-xs font-bold text-brand-red hover:text-brand-darkred transition outline-none">
                             <span>${t.viewDetails}</span>
                             <svg id="icon-${i}" class="w-4 h-4 transition-transform duration-300 bg-brand-red/10 rounded-full p-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div id="acc-${i}" class="accordion-content">
                             <div class="pt-4 pb-2 space-y-4">
                                 ${log.projectName ? `<div><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">${t.projectLabel}</span><p class="text-sm text-gray-700 font-medium">${log.projectName}</p></div>` : ''}
-                                ${log.problemFaced ? `<div class="bg-red-50 p-3 rounded-xl border border-red-100"><span class="text-[10px] font-extrabold text-red-500 uppercase tracking-wider flex items-center"><svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>${t.problemLabel}</span><p class="text-sm text-gray-800 mt-1 font-medium">${log.problemFaced}</p></div>` : ''}
-                                ${log.solution ? `<div class="bg-green-50 p-3 rounded-xl border border-green-100"><span class="text-[10px] font-extrabold text-green-600 uppercase tracking-wider flex items-center"><svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>${t.solutionLabel}</span><p class="text-sm text-gray-800 mt-1 font-medium">${log.solution}</p></div>` : ''}
+                                ${log.problemFaced ? `<div class="bg-red-50 p-3 rounded-xl border border-red-100"><span class="text-[10px] font-extrabold text-red-500 uppercase tracking-wider flex items-center mb-1"><svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>${t.problemLabel}</span><p class="text-sm text-gray-800 font-medium">${log.problemFaced}</p></div>` : ''}
+                                ${log.solution ? `<div class="bg-green-50 p-3 rounded-xl border border-green-100"><span class="text-[10px] font-extrabold text-green-600 uppercase tracking-wider flex items-center mb-1"><svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>${t.solutionLabel}</span><p class="text-sm text-gray-800 font-medium">${log.solution}</p></div>` : ''}
                                 ${linkHtml}
                             </div>
                         </div>
@@ -266,35 +434,26 @@
         function renderReports(reports) {
             const container = document.getElementById('reportsContent');
             const t = dict[currentLang];
-            if (!reports.length) return container.innerHTML = `<div class="text-center p-8 text-gray-400 bg-white rounded-2xl border border-gray-100">${t.emptyReports}</div>`;
+            if (!reports.length) return container.innerHTML = `<div class="text-center p-8 text-gray-400 bg-white rounded-2xl border border-gray-100 font-medium">${t.emptyReports}</div>`;
 
             let html = '';
             reports.forEach(r => {
                 let safeUrl = r.url.trim().startsWith('http') ? r.url.trim() : 'https://' + r.url.trim();
                 html += `
                 <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 mb-5 relative overflow-hidden">
-                    <!-- Accent bar at top -->
                     <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand-yellow to-brand-red"></div>
-                    
-                    <div class="flex justify-between items-end border-b border-gray-50 pb-4 mb-4 mt-1">
-                        <div>
-                            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">${t.termLabel}</p>
-                            <h3 class="text-xl font-extrabold text-brand-darkred leading-tight mt-0.5">${r.term}</h3>
-                        </div>
-                        <div class="text-right">
-                             <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">${t.programsLabel}</p>
-                             <p class="text-xs font-bold text-gray-700 bg-gray-100 px-2.5 py-1 rounded-md mt-1">${r.programs}</p>
-                        </div>
+                    <div class="border-b border-gray-50 pb-4 mb-4 mt-1">
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">${t.termLabel}</p>
+                        <h3 class="text-xl font-extrabold text-brand-darkred leading-tight mt-0.5">${r.term}</h3>
                     </div>
                     
                     <p class="text-[11px] font-bold text-brand-red uppercase tracking-wider mb-2 flex items-center">
                         <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                         ${t.summaryLabel}
                     </p>
-                    <div class="bg-gradient-to-br from-brand-yellow/10 to-brand-red/5 p-4 rounded-2xl border border-brand-yellow/20 text-gray-700 text-sm leading-relaxed mb-5 font-medium shadow-inner">
-                        ${r.summary}
-                    </div>
-                    ${r.url ? `<a href="${safeUrl}" target="_blank" class="flex justify-center items-center w-full bg-brand-red text-white font-bold py-3.5 rounded-xl hover:bg-brand-darkred hover:shadow-lg transition text-sm shadow-md shadow-brand-red/20">
+                    <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 text-gray-700 text-sm leading-relaxed mb-5 font-medium whitespace-pre-wrap">${r.summary}</div>
+                    
+                    ${r.url ? `<a href="${safeUrl}" target="_blank" class="flex justify-center items-center w-full bg-brand-red text-white font-bold py-3.5 rounded-xl hover:bg-brand-darkred transition text-sm shadow-md shadow-brand-red/20">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                         ${t.downloadBtn}
                     </a>` : ''}
@@ -322,9 +481,7 @@
             loggedInStudentId = null;
             document.getElementById('studentIdInput').value = ''; document.getElementById('pinInput').value = '';
             document.getElementById('loginError').classList.add('hidden');
-            document.getElementById('dashboardView').classList.add('hidden');
-            document.getElementById('bottomNav').classList.add('hidden');
-            document.getElementById('loginView').classList.remove('hidden');
+            showView('landing');
         }
     </script>
 </body>
