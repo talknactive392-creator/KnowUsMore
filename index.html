@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Talk 'N Active | Portal</title>
+    <title>Talk 'N Active</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -24,46 +24,138 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .accordion-content { transition: max-height 0.3s ease-out; overflow: hidden; max-height: 0; }
         .accordion-content.open { max-height: 500px; }
+        .hero-pattern { background-image: radial-gradient(#F4D35E 1px, transparent 1px); background-size: 20px 20px; opacity: 0.15; }
     </style>
 </head>
-<body class="font-sans text-gray-800 antialiased h-screen flex flex-col">
+<body class="font-sans text-gray-800 antialiased h-screen flex flex-col relative">
 
-    <!-- Top Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-md mx-auto px-4 py-3 flex justify-between items-center">
+    <!-- Top Navigation -->
+    <header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
             <img src="Header.png" alt="Talk 'N Active" class="h-8 object-contain cursor-pointer" onclick="showView('landing')">
-            <button onclick="toggleLanguage()" class="bg-gray-50 px-3 py-1.5 rounded-full text-xs font-bold text-gray-600 border border-gray-200 shadow-sm">
-                <span id="langIndicator">🇮🇩 ID</span>
-            </button>
-        </div>
-    </header>
-
-    <main class="flex-grow max-w-md mx-auto w-full p-4 relative">
-        
-        <!-- 1. LANDING PAGE VIEW -->
-        <div id="landingView" class="text-center mt-10 animate-fade-in">
-            <img src="Header.png" alt="Logo" class="h-20 mx-auto mb-6 object-contain">
-            <h1 class="text-3xl font-extrabold text-brand-black mb-2" id="landingTitle">Future-Ready Skills</h1>
-            <p class="text-gray-500 font-medium mb-10" id="landingSubtitle">Coding & English programs designed to empower young minds.</p>
-            
-            <div class="space-y-4">
-                <button onclick="showView('trial')" class="w-full bg-brand-yellow text-brand-black font-extrabold py-4 px-4 rounded-xl hover:bg-yellow-400 transition shadow-lg shadow-brand-yellow/40 flex justify-center items-center">
-                    <span id="btnBookTrial">Book a Free Trial</span>
-                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <div class="flex items-center space-x-3">
+                <button onclick="showView('login')" class="text-sm font-bold text-brand-darkred hover:text-brand-red hidden sm:block mr-2" id="navPortal">Portal</button>
+                <button onclick="toggleLanguage()" class="bg-gray-50 px-3 py-1.5 rounded-full text-xs font-bold text-gray-600 border border-gray-200 shadow-sm hover:bg-gray-100 transition">
+                    <span id="langIndicator">🇮🇩 ID</span>
                 </button>
-                <button onclick="showView('login')" class="w-full bg-white border-2 border-gray-200 text-gray-700 font-bold py-4 px-4 rounded-xl hover:border-brand-red hover:text-brand-red transition flex justify-center items-center">
-                    <span id="btnPortalAccess">Parent / Student Portal</span>
+                <!-- Mobile Menu Button -->
+                <button onclick="showView('login')" class="sm:hidden bg-brand-red text-white p-1.5 rounded-md">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                 </button>
             </div>
         </div>
+    </header>
 
-        <!-- 2. TRIAL BOOKING FORM VIEW -->
-        <div id="trialView" class="hidden bg-white p-6 rounded-3xl shadow-lg shadow-brand-red/5 border border-gray-100 mt-4">
+    <main class="flex-grow w-full relative">
+        
+        <!-- ========================================== -->
+        <!-- 1. LANDING PAGE VIEW (The Marketing Site)  -->
+        <!-- ========================================== -->
+        <div id="landingView" class="animate-fade-in pb-20">
+            <!-- Hero Section -->
+            <section class="relative bg-white pt-16 pb-20 overflow-hidden">
+                <div class="absolute inset-0 hero-pattern"></div>
+                <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-brand-black mb-4 leading-tight" id="heroTitle">Empowering Minds,<br><span class="text-brand-red">Inspiring Futures</span></h1>
+                    <p class="text-gray-500 font-medium mb-8 max-w-lg mx-auto" id="heroSubtitle">We equip students with future-ready skills that open limitless opportunities.</p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <button onclick="showView('trial')" class="bg-brand-yellow text-brand-black font-extrabold py-3.5 px-8 rounded-xl hover:bg-yellow-400 transition shadow-lg shadow-brand-yellow/40">
+                            <span id="btnHeroTrial">Book a Free Trial</span>
+                        </button>
+                        <button onclick="showView('inquiry')" class="bg-white border-2 border-brand-red text-brand-red font-bold py-3.5 px-8 rounded-xl hover:bg-brand-red hover:text-white transition shadow-sm">
+                            <span id="btnHeroLearn">Learn More</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About / Message from the Heart -->
+            <section class="bg-gray-50 py-16">
+                <div class="max-w-4xl mx-auto px-4">
+                    <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 relative overflow-hidden">
+                        <div class="w-16 h-16 bg-brand-red rounded-full absolute -top-8 -left-8 opacity-20"></div>
+                        <h2 class="text-2xl font-bold text-brand-black mb-4" id="aboutTitle">A Message from the Heart</h2>
+                        <p class="text-gray-600 leading-relaxed text-sm md:text-base font-medium mb-4" id="aboutText1">Talk 'n Active was born from a dream-to create more than just a place to learn, but a space where education becomes a life-changing experience. We believe that every student is unique, with their own learning style and starting point.</p>
+                        <p class="text-brand-darkred font-bold" id="aboutText2">More than a course—A community that cares. Private classes (1:1) designed to be engaging and tailored to each student.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Programs Grid -->
+            <section class="py-16 max-w-4xl mx-auto px-4">
+                <h2 class="text-3xl font-extrabold text-center mb-12" id="programsTitle">Our Programs</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- English -->
+                    <div class="bg-white p-6 rounded-2xl border-2 border-gray-50 hover:border-brand-yellow transition shadow-sm">
+                        <div class="w-12 h-12 bg-brand-yellow/20 rounded-xl flex items-center justify-center mb-4 text-2xl">🇬🇧</div>
+                        <h3 class="font-bold text-xl mb-2" id="prog1Title">Language Mastery</h3>
+                        <p class="text-sm text-gray-500 mb-4" id="prog1Desc">English classes for elementary to high school students, college students, and professionals. (Assistance, Speaking, TOEFL/IELTS).</p>
+                    </div>
+                    <!-- Coding -->
+                    <div class="bg-white p-6 rounded-2xl border-2 border-gray-50 hover:border-brand-red transition shadow-sm">
+                        <div class="w-12 h-12 bg-brand-red/10 rounded-xl flex items-center justify-center mb-4 text-2xl text-brand-red">💻</div>
+                        <h3 class="font-bold text-xl mb-2" id="prog2Title">Digital Literacy</h3>
+                        <p class="text-sm text-gray-500 mb-4" id="prog2Desc">Coding classes for beginners. Learn Code.org, Scratch, Thunkable, Python, Roblox, HTML & CSS.</p>
+                    </div>
+                    <!-- Public Speaking -->
+                    <div class="bg-white p-6 rounded-2xl border-2 border-gray-50 hover:border-brand-darkred transition shadow-sm">
+                        <div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-4 text-2xl">🎤</div>
+                        <h3 class="font-bold text-xl mb-2" id="prog3Title">Public Speaking</h3>
+                        <p class="text-sm text-gray-500 mb-4" id="prog3Desc">Improve presentation skills and content creation confidence. Speak powerfully in front of any audience or camera.</p>
+                    </div>
+                    <!-- Counseling & BIPA -->
+                    <div class="bg-white p-6 rounded-2xl border-2 border-gray-50 hover:border-brand-yellow transition shadow-sm">
+                        <div class="w-12 h-12 bg-brand-yellow/20 rounded-xl flex items-center justify-center mb-4 text-2xl">🧭</div>
+                        <h3 class="font-bold text-xl mb-2" id="prog4Title">Counseling & BIPA</h3>
+                        <p class="text-sm text-gray-500 mb-4" id="prog4Desc">Career/academic counseling for youth, and Bahasa Indonesia for Foreign Speakers (BIPA).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials -->
+            <section class="bg-brand-red py-16 text-white">
+                <div class="max-w-4xl mx-auto px-4">
+                    <h2 class="text-3xl font-extrabold text-center mb-10" id="testiTitle">What They Say</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white/10 p-6 rounded-2xl backdrop-blur-sm">
+                            <p class="text-sm font-medium italic mb-4">"The teacher is very patient and provides guidance for both school work and non-school-related tasks. The 'What I Learned Today' form reduces mistakes in future practices. Highly recommended!"</p>
+                            <p class="font-bold text-brand-yellow">- Fio <span class="text-xs text-white/70 font-normal block" id="testi1Tag">(Language Mastery & Coding)</span></p>
+                        </div>
+                        <div class="bg-white/10 p-6 rounded-2xl backdrop-blur-sm">
+                            <p class="text-sm font-medium italic mb-4">"Anak saya jadi lebih percaya diri dan semangat belajar coding. Pengajarnya cepat tangkap soal bagian mana yang masih lemah dan membimbing dengan sabar."</p>
+                            <p class="font-bold text-brand-yellow">- Babyana <span class="text-xs text-white/70 font-normal block" id="testi2Tag">(Parent of Coding Student)</span></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Location & Final CTA -->
+            <section class="py-16 max-w-md mx-auto px-4 text-center">
+                <h2 class="text-2xl font-bold mb-2" id="locTitle">Learn Anywhere</h2>
+                <p class="text-gray-500 mb-8 text-sm" id="locDesc">Our classes are fully online with flexible scheduling. For those residing in Malang, we also offer immersive offline classes.</p>
+                <button onclick="showView('inquiry')" class="w-full bg-brand-black text-white font-extrabold py-4 px-4 rounded-xl hover:bg-gray-800 transition">
+                    <span id="btnFooterContact">Contact Us Today</span>
+                </button>
+            </section>
+            
+            <!-- Footer Info -->
+            <footer class="text-center text-gray-400 text-xs pb-10">
+                <p>WhatsApp: 62812-4926-2463</p>
+                <p>Green Diamond Residence G3, Kota Malang</p>
+                <p class="mt-2">IG / TikTok / YT: @talknactive392</p>
+            </footer>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 2. BOOK FREE TRIAL FORM VIEW (Coding/English)-->
+        <!-- ========================================== -->
+        <div id="trialView" class="hidden max-w-md mx-auto bg-white p-6 rounded-3xl shadow-lg shadow-brand-red/5 border border-gray-100 mt-4 animate-fade-in">
             <button onclick="showView('landing')" class="text-gray-400 hover:text-brand-red flex items-center text-sm font-bold mb-4">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                <span id="btnBack">Back</span>
+                <span class="btnBackText">Back</span>
             </button>
-            <h2 class="text-2xl font-extrabold text-brand-black mb-6" id="trialHeading">Book Free Trial</h2>
+            <h2 class="text-2xl font-extrabold text-brand-black mb-2" id="trialHeading">Book Free Trial</h2>
+            <p class="text-xs text-gray-500 mb-6 font-medium" id="trialSub">For Coding and English Language Mastery.</p>
             
             <div id="trialAlert" class="hidden mb-4 p-3 rounded-xl text-sm text-center font-medium"></div>
 
@@ -97,26 +189,71 @@
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1" id="lblTiming">Preferred Timing</label>
                     <select id="tTiming" class="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-brand-red outline-none">
-                        <option value="Weekday Afternoon" id="optWeekday">Weekday Afternoon (15:00 - 17:00)</option>
-                        <option value="Weekend Morning" id="optWeekend">Weekend Morning (09:00 - 12:00)</option>
+                        <option value="Weekday Afternoon" id="optWeekday">Weekday Afternoon</option>
+                        <option value="Weekend Morning" id="optWeekend">Weekend Morning</option>
                     </select>
                 </div>
-                <button onclick="submitTrial()" class="w-full bg-brand-red text-white font-bold py-4 px-4 rounded-xl hover:bg-brand-darkred transition flex justify-center items-center mt-2 shadow-lg shadow-brand-red/30">
+                <button onclick="submitForm('trial')" class="w-full bg-brand-yellow text-brand-black font-extrabold py-4 px-4 rounded-xl hover:bg-yellow-400 transition flex justify-center items-center mt-2 shadow-lg shadow-brand-yellow/30">
                     <span id="btnSubmitTrial">Request Schedule</span>
-                    <div id="trialLoader" class="loader hidden ml-2 border-t-white"></div>
+                    <div id="trialLoader" class="loader hidden ml-2 border-t-brand-black"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 3. GENERAL INQUIRY FORM VIEW (Learn More)  -->
+        <!-- ========================================== -->
+        <div id="inquiryView" class="hidden max-w-md mx-auto bg-white p-6 rounded-3xl shadow-lg shadow-brand-red/5 border border-gray-100 mt-4 animate-fade-in">
+             <button onclick="showView('landing')" class="text-gray-400 hover:text-brand-red flex items-center text-sm font-bold mb-4">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <span class="btnBackText">Back</span>
+            </button>
+            <h2 class="text-2xl font-extrabold text-brand-black mb-2" id="inqHeading">Learn More</h2>
+            <p class="text-xs text-gray-500 mb-6 font-medium" id="inqSub">Have questions about IELTS, Counseling, or Public Speaking? Let's talk!</p>
+            
+            <div id="inqAlert" class="hidden mb-4 p-3 rounded-xl text-sm text-center font-medium"></div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1" id="lblInqName">Your Name</label>
+                    <input type="text" id="iName" class="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-brand-red outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1" id="lblInqWa">WhatsApp Number</label>
+                    <input type="tel" id="iWhatsapp" class="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-brand-red outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1" id="lblInqProg">Interested In</label>
+                    <select id="iProgram" class="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-brand-red outline-none">
+                        <option value="IELTS / TOEFL Prep">IELTS / TOEFL Preparation</option>
+                        <option value="Public Speaking">Public Speaking</option>
+                        <option value="Counseling">Academic / Career Counseling</option>
+                        <option value="BIPA">BIPA (Indonesian for Foreigners)</option>
+                        <option value="Other">Other / General Question</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1" id="lblInqMsg">Message / Questions</label>
+                    <textarea id="iMessage" rows="3" class="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-brand-red outline-none"></textarea>
+                </div>
+                <button onclick="submitForm('inquiry')" class="w-full bg-brand-red text-white font-extrabold py-4 px-4 rounded-xl hover:bg-brand-darkred transition flex justify-center items-center mt-2 shadow-lg shadow-brand-red/30">
+                    <span id="btnSubmitInq">Send Message</span>
+                    <div id="inqLoader" class="loader hidden ml-2 border-t-white"></div>
                 </button>
             </div>
         </div>
         
-        <!-- 3. LOGIN VIEW -->
-        <div id="loginView" class="hidden bg-white p-8 rounded-3xl shadow-lg shadow-brand-red/5 border border-gray-100 mt-6">
+        <!-- ========================================== -->
+        <!-- 4. LOGIN VIEW (Portal)                     -->
+        <!-- ========================================== -->
+        <div id="loginView" class="hidden max-w-md mx-auto bg-white p-8 rounded-3xl shadow-lg shadow-brand-red/5 border border-gray-100 mt-6 animate-fade-in">
              <button onclick="showView('landing')" class="text-gray-400 hover:text-brand-red flex items-center text-sm font-bold mb-6">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                 <span class="btnBackText">Back</span>
             </button>
             <div class="text-center mb-8">
-                <h2 class="text-2xl font-extrabold text-brand-black" id="loginHeading">Welcome Back</h2>
-                <p class="text-brand-darkred font-medium text-sm mt-1 italic" id="loginSubheading">Empowering Minds, Inspiring Futures</p>
+                <h2 class="text-2xl font-extrabold text-brand-black" id="loginHeading">Student Portal</h2>
+                <p class="text-brand-darkred font-medium text-sm mt-1 italic">Empowering Minds, Inspiring Futures</p>
             </div>
             
             <div id="loginError" class="hidden mb-4 p-3 bg-red-50 text-red-600 text-sm rounded-xl border border-red-100 text-center font-medium"></div>
@@ -137,10 +274,12 @@
             </div>
         </div>
 
-        <!-- 4. DASHBOARD VIEW -->
-        <div id="dashboardView" class="hidden pb-20 mt-2">
+        <!-- ========================================== -->
+        <!-- 5. DASHBOARD VIEW (Private Portal)         -->
+        <!-- ========================================== -->
+        <div id="dashboardView" class="hidden max-w-md mx-auto pb-20 mt-2 animate-fade-in p-4">
             
-            <!-- JOIN CLASS BUTTON (Hidden if no link) -->
+            <!-- JOIN CLASS BUTTON -->
             <a href="#" target="_blank" id="btnJoinClass" class="hidden w-full bg-green-500 hover:bg-green-600 text-white font-extrabold py-4 px-4 rounded-2xl mb-4 shadow-lg shadow-green-500/30 flex justify-center items-center animate-pulse-fast transition">
                 <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                 <span id="textJoinClass">Join Online Class Now</span>
@@ -156,14 +295,14 @@
             </div>
 
             <!-- Tabs -->
-            <div class="flex bg-gray-200/50 p-1.5 rounded-2xl mb-6">
-                <button onclick="switchTab('logs')" id="tabLogs" class="flex-1 py-2.5 text-sm font-bold rounded-xl bg-white shadow-sm text-brand-red transition">Daily Logs</button>
+            <div class="flex bg-white p-1.5 rounded-2xl mb-6 shadow-sm border border-gray-100">
+                <button onclick="switchTab('logs')" id="tabLogs" class="flex-1 py-2.5 text-sm font-bold rounded-xl bg-gray-50 shadow-sm text-brand-red transition">Daily Logs</button>
                 <button onclick="switchTab('reports')" id="tabReports" class="flex-1 py-2.5 text-sm font-bold rounded-xl text-gray-500 hover:text-gray-800 transition">Progress Reports</button>
             </div>
 
             <div id="dashboardContent" class="min-h-[300px] relative">
                 <div id="dataLoader" class="absolute inset-0 flex flex-col items-center justify-center z-10">
-                    <div class="loader mb-3"></div>
+                    <div class="loader mb-3 border-t-brand-red border-gray-200"></div>
                     <p class="text-sm font-medium text-gray-500 animate-pulse" id="loadingText">Fetching records...</p>
                 </div>
                 <div id="logsContent" class="hidden space-y-4"></div>
@@ -172,7 +311,7 @@
         </div>
     </main>
 
-    <!-- Bottom Nav for Logout -->
+    <!-- Bottom Nav for Logout (Only in Dashboard) -->
     <div id="bottomNav" class="hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 pb-safe pb-6 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-50">
         <div class="max-w-md mx-auto flex justify-center">
              <button onclick="logout()" class="flex items-center text-gray-500 font-bold px-6 py-2.5 rounded-full hover:bg-gray-50 transition">
@@ -184,51 +323,90 @@
 
     <script>
         // --- PASTE YOUR *NEW* GOOGLE APPS SCRIPT WEB APP URL HERE ---
-        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzV9_zTVqJ_UHCkqatObq-zw9BXypRHD2qjTd6Lj4bcBVaRyPW-y6K80THnwCfUu_LaSw/exec';
+        const GAS_WEB_APP_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
         // -------------------------------------------------------------
 
         let currentLang = 'en';
         let loggedInStudentId = null;
 
+        // The Massive Dictionary based on Handbook 2025
         const dict = {
             'en': {
-                langBtn: '🇮🇩 ID',
-                // Landing & Trial
-                landingTitle: 'Future-Ready Skills', landingSubtitle: 'Coding & English programs designed to empower young minds.',
-                btnBookTrial: 'Book a Free Trial', btnPortalAccess: 'Parent / Student Portal',
-                btnBack: 'Back', trialHeading: 'Book Free Trial', lblParentName: 'Parent Name',
-                lblChildName: 'Child Name', lblAge: 'Age', lblWhatsapp: 'WhatsApp Number',
+                langBtn: '🇮🇩 ID', navPortal: 'Portal',
+                // Landing Page
+                heroTitle: 'Empowering Minds,<br><span class="text-brand-red">Inspiring Futures</span>',
+                heroSubtitle: 'We equip students with future-ready skills that open limitless opportunities.',
+                btnHeroTrial: 'Book a Free Trial', btnHeroLearn: 'Learn More',
+                aboutTitle: 'A Message from the Heart',
+                aboutText1: 'Talk \'n Active was born from a dream—to create more than just a place to learn, but a space where education becomes a life-changing experience. We believe that every student is unique, with their own learning style and starting point.',
+                aboutText2: 'More than a course—A community that cares. Private classes (1:1) designed to be engaging and tailored to each student.',
+                programsTitle: 'Our Programs',
+                prog1Title: 'Language Mastery', prog1Desc: 'English classes for elementary to high school students, college students, and professionals. (Assistance, Speaking, TOEFL/IELTS).',
+                prog2Title: 'Digital Literacy', prog2Desc: 'Coding classes for beginners. Learn Code.org, Scratch, Thunkable, Python, Roblox, HTML & CSS.',
+                prog3Title: 'Public Speaking', prog3Desc: 'Improve presentation skills and content creation confidence. Speak powerfully in front of any audience or camera.',
+                prog4Title: 'Counseling & BIPA', prog4Desc: 'Career/academic counseling for youth, and Bahasa Indonesia for Foreign Speakers (BIPA).',
+                testiTitle: 'What They Say', testi1Tag: '(Language Mastery & Coding)', testi2Tag: '(Parent of Coding Student)',
+                locTitle: 'Learn Anywhere', locDesc: 'Our classes are fully online with flexible scheduling. For those residing in Malang, we also offer immersive offline classes.', btnFooterContact: 'Contact Us Today',
+                
+                // Forms Shared
+                btnBack: 'Back', msgSuccess: 'Success! We will contact you shortly.', msgError: 'Please fill all fields.', errorNetwork: 'Network error.',
+                
+                // Trial Form
+                trialHeading: 'Book Free Trial', trialSub: 'For Coding and English Language Mastery.',
+                lblParentName: 'Parent Name', lblChildName: 'Child Name', lblAge: 'Age', lblWhatsapp: 'WhatsApp Number',
                 lblProgram: 'Program', lblTiming: 'Preferred Timing', btnSubmitTrial: 'Request Schedule',
-                optWeekday: 'Weekday Afternoon (15:00 - 17:00)', optWeekend: 'Weekend Morning (09:00 - 12:00)',
-                msgTrialSuccess: 'Success! We will WhatsApp you shortly.', msgTrialError: 'Please fill all fields.',
-                // Portal
-                loginHeading: 'Welcome Back', loginSubheading: 'Empowering Minds, Inspiring Futures',
-                labelId: 'Student ID', labelPin: 'Security PIN', loginBtn: 'Access Portal', 
+                optWeekday: 'Weekday Afternoon', optWeekend: 'Weekend Morning',
+                
+                // Inquiry Form
+                inqHeading: 'Learn More', inqSub: 'Have questions about IELTS, Counseling, or Public Speaking? Let\'s talk!',
+                lblInqName: 'Your Name', lblInqWa: 'WhatsApp Number', lblInqProg: 'Interested In', lblInqMsg: 'Message / Questions', btnSubmitInq: 'Send Message',
+                
+                // Portal Shared
+                loginHeading: 'Student Portal', labelId: 'Student ID', labelPin: 'Security PIN', loginBtn: 'Access Portal', 
                 welcomeMsg: 'Welcome,', tabLogs: 'Daily Logs', tabReports: 'Progress Reports', 
                 loadingText: 'Fetching records...', logoutText: 'Sign Out', textJoinClass: 'Join Online Class Now',
                 emptyLogs: 'No daily logs found.', emptyReports: 'No reports found.', downloadBtn: 'Download Full PDF Report',
-                errorEmpty: 'Please enter ID and PIN.', errorNetwork: 'Network error.', termLabel: 'Period',
+                errorEmpty: 'Please enter ID and PIN.', termLabel: 'Period', enrolledLabel: 'Program',
                 summaryLabel: 'Teacher Notes', learnedLabel: 'Today I learned:',
                 projectLabel: 'Project:', problemLabel: 'Challenges Faced:', solutionLabel: 'How I Solved It:', 
                 viewDetails: 'View Details', viewProjectBtn: 'View Project Link'
             },
             'id': {
-                langBtn: '🇬🇧 EN',
-                // Landing & Trial
-                landingTitle: 'Keterampilan Masa Depan', landingSubtitle: 'Program Coding & Bahasa Inggris untuk memberdayakan generasi muda.',
-                btnBookTrial: 'Daftar Kelas Coba Gratis', btnPortalAccess: 'Portal Orang Tua / Siswa',
-                btnBack: 'Kembali', trialHeading: 'Daftar Kelas Coba', lblParentName: 'Nama Orang Tua',
-                lblChildName: 'Nama Anak', lblAge: 'Umur', lblWhatsapp: 'Nomor WhatsApp',
+                langBtn: '🇬🇧 EN', navPortal: 'Portal',
+                // Landing Page
+                heroTitle: 'Empowering Minds,<br><span class="text-brand-red">Inspiring Futures</span>',
+                heroSubtitle: 'Kami membekali siswa dengan kemampuan masa depan yang membuka peluang tanpa batas.',
+                btnHeroTrial: 'Daftar Kelas Coba', btnHeroLearn: 'Pelajari Lebih Lanjut',
+                aboutTitle: 'Pesan dari Hati',
+                aboutText1: 'Talk \'n Active lahir dari mimpi untuk menciptakan lebih dari sekadar tempat belajar—tetapi sebuah ruang yang menjadikan pendidikan pengalaman yang mengubah hidup. Kami percaya bahwa setiap siswa unik, dengan gaya belajar dan titik awalnya sendiri.',
+                aboutText2: 'Lebih dari sekadar kursus—Sebuah komunitas yang peduli. Kelas privat (1:1) dirancang menarik dan disesuaikan dengan gaya belajar siswa.',
+                programsTitle: 'Program Kami',
+                prog1Title: 'Language Mastery', prog1Desc: 'Kelas bahasa Inggris untuk siswa SD hingga SMA, mahasiswa, dan usia kerja. (Assistance, Speaking, TOEFL/IELTS).',
+                prog2Title: 'Digital Literacy', prog2Desc: 'Kelas coding untuk pemula. Belajar Code.org, Scratch, Thunkable, Python, Roblox, HTML & CSS.',
+                prog3Title: 'Public Speaking', prog3Desc: 'Tingkatkan kemampuan presentasi dan content creation. Bicara percaya diri di depan umum atau kamera.',
+                prog4Title: 'Konseling & BIPA', prog4Desc: 'Konseling bakat minat untuk siswa SMP/SMA, dan Kelas Bahasa Indonesia bagi Penutur Asing (BIPA).',
+                testiTitle: 'Apa Kata Mereka', testi1Tag: '(Siswa Language Mastery & Coding)', testi2Tag: '(Orang tua siswa Coding)',
+                locTitle: 'Belajar di Mana Saja', locDesc: 'Kelas kami sepenuhnya online dengan waktu fleksibel. Bagi Anda di Kota Malang, kami juga menyediakan kelas offline.', btnFooterContact: 'Hubungi Kami Hari Ini',
+
+                // Forms Shared
+                btnBack: 'Kembali', msgSuccess: 'Berhasil! Kami akan segera menghubungi Anda.', msgError: 'Mohon isi semua data.', errorNetwork: 'Gangguan jaringan.',
+                
+                // Trial Form
+                trialHeading: 'Daftar Kelas Coba', trialSub: 'Untuk Program Coding dan Bahasa Inggris.',
+                lblParentName: 'Nama Orang Tua', lblChildName: 'Nama Anak', lblAge: 'Umur', lblWhatsapp: 'Nomor WhatsApp',
                 lblProgram: 'Pilihan Program', lblTiming: 'Pilihan Waktu', btnSubmitTrial: 'Ajukan Jadwal',
-                optWeekday: 'Sore Hari Kerja (15:00 - 17:00)', optWeekend: 'Pagi Akhir Pekan (09:00 - 12:00)',
-                msgTrialSuccess: 'Berhasil! Kami akan menghubungi via WhatsApp.', msgTrialError: 'Mohon isi semua data.',
-                // Portal
-                loginHeading: 'Selamat Datang', loginSubheading: 'Empowering Minds, Inspiring Futures',
-                labelId: 'ID Siswa', labelPin: 'PIN Keamanan', loginBtn: 'Masuk Portal', 
+                optWeekday: 'Sore Hari Kerja', optWeekend: 'Pagi Akhir Pekan',
+                
+                // Inquiry Form
+                inqHeading: 'Pelajari Lebih Lanjut', inqSub: 'Ada pertanyaan tentang IELTS, Konseling, atau Public Speaking? Mari diskusi!',
+                lblInqName: 'Nama Anda', lblInqWa: 'Nomor WhatsApp', lblInqProg: 'Tertarik Pada', lblInqMsg: 'Pesan / Pertanyaan', btnSubmitInq: 'Kirim Pesan',
+
+                // Portal Shared
+                loginHeading: 'Portal Siswa', labelId: 'ID Siswa', labelPin: 'PIN Keamanan', loginBtn: 'Masuk Portal', 
                 welcomeMsg: 'Halo,', tabLogs: 'Jurnal Harian', tabReports: 'Rapor Belajar', 
                 loadingText: 'Mengambil data...', logoutText: 'Keluar', textJoinClass: 'Masuk Kelas Online Sekarang',
                 emptyLogs: 'Belum ada jurnal.', emptyReports: 'Belum ada rapor.', downloadBtn: 'Unduh Rapor PDF Lengkap',
-                errorEmpty: 'Mohon isi ID dan PIN.', errorNetwork: 'Gangguan jaringan.', termLabel: 'Periode',
+                errorEmpty: 'Mohon isi ID dan PIN.', termLabel: 'Periode', enrolledLabel: 'Program',
                 summaryLabel: 'Catatan Guru', learnedLabel: 'Hari ini saya belajar:',
                 projectLabel: 'Proyek:', problemLabel: 'Tantangan yang Dihadapi:', solutionLabel: 'Cara Saya Menyelesaikan:',
                 viewDetails: 'Lihat Detail', viewProjectBtn: 'Lihat Link Proyek'
@@ -241,95 +419,91 @@
             const t = dict[currentLang];
             document.getElementById('langIndicator').innerText = t.langBtn;
             
-            // Apply Landing & Trial
-            document.getElementById('landingTitle').innerText = t.landingTitle;
-            document.getElementById('landingSubtitle').innerText = t.landingSubtitle;
-            document.getElementById('btnBookTrial').innerText = t.btnBookTrial;
-            document.getElementById('btnPortalAccess').innerText = t.btnPortalAccess;
+            // Map text directly to IDs
+            const textMappings = [
+                'navPortal', 'heroTitle', 'heroSubtitle', 'btnHeroTrial', 'btnHeroLearn',
+                'aboutTitle', 'aboutText1', 'aboutText2', 'programsTitle', 'prog1Title', 'prog1Desc',
+                'prog2Title', 'prog2Desc', 'prog3Title', 'prog3Desc', 'prog4Title', 'prog4Desc',
+                'testiTitle', 'testi1Tag', 'testi2Tag', 'locTitle', 'locDesc', 'btnFooterContact',
+                'trialHeading', 'trialSub', 'lblParentName', 'lblChildName', 'lblAge', 'lblWhatsapp', 
+                'lblProgram', 'lblTiming', 'btnSubmitTrial', 'optWeekday', 'optWeekend',
+                'inqHeading', 'inqSub', 'lblInqName', 'lblInqWa', 'lblInqProg', 'lblInqMsg', 'btnSubmitInq',
+                'loginHeading', 'labelStudentId', 'labelPin', 'loginBtnText', 'dashWelcome',
+                'tabLogs', 'tabReports', 'loadingText', 'logoutText', 'textJoinClass'
+            ];
+
+            textMappings.forEach(id => {
+                const el = document.getElementById(id);
+                // For labelStudentId map to labelId in dict to match variables
+                let dictKey = id;
+                if(id === 'labelStudentId') dictKey = 'labelId';
+                if(el && t[dictKey]) el.innerHTML = t[dictKey];
+            });
+
             document.querySelectorAll('.btnBackText').forEach(el => el.innerText = t.btnBack);
-            document.getElementById('btnBack').innerText = t.btnBack;
-            document.getElementById('trialHeading').innerText = t.trialHeading;
-            document.getElementById('lblParentName').innerText = t.lblParentName;
-            document.getElementById('lblChildName').innerText = t.lblChildName;
-            document.getElementById('lblAge').innerText = t.lblAge;
-            document.getElementById('lblWhatsapp').innerText = t.lblWhatsapp;
-            document.getElementById('lblProgram').innerText = t.lblProgram;
-            document.getElementById('lblTiming').innerText = t.lblTiming;
-            document.getElementById('btnSubmitTrial').innerText = t.btnSubmitTrial;
-            document.getElementById('optWeekday').innerText = t.optWeekday;
-            document.getElementById('optWeekend').innerText = t.optWeekend;
-
-            // Apply Portal
-            document.getElementById('loginHeading').innerText = t.loginHeading;
-            document.getElementById('loginSubheading').innerText = t.loginSubheading;
-            document.getElementById('labelStudentId').innerText = t.labelId;
-            document.getElementById('labelPin').innerText = t.labelPin;
-            document.getElementById('loginBtnText').innerText = t.loginBtn;
-            document.getElementById('dashWelcome').innerText = t.welcomeMsg;
-            document.getElementById('tabLogs').innerText = t.tabLogs;
-            document.getElementById('tabReports').innerText = t.tabReports;
-            document.getElementById('loadingText').innerText = t.loadingText;
-            document.getElementById('logoutText').innerText = t.logoutText;
-            document.getElementById('textJoinClass').innerText = t.textJoinClass;
-
             if (loggedInStudentId) fetchDashboardData(loggedInStudentId); 
         }
 
         function showView(viewName) {
-            ['landingView', 'trialView', 'loginView', 'dashboardView', 'bottomNav'].forEach(id => {
+            window.scrollTo(0, 0); // Scroll to top
+            ['landingView', 'trialView', 'inquiryView', 'loginView', 'dashboardView', 'bottomNav'].forEach(id => {
                 document.getElementById(id).classList.add('hidden');
             });
             document.getElementById(viewName + 'View').classList.remove('hidden');
             if(viewName === 'dashboard') document.getElementById('bottomNav').classList.remove('hidden');
         }
 
-        async function submitTrial() {
-            const payload = {
-                action: 'submitTrialForm',
-                parentName: document.getElementById('tParentName').value.trim(),
-                studentName: document.getElementById('tChildName').value.trim(),
-                age: document.getElementById('tAge').value.trim(),
-                whatsapp: document.getElementById('tWhatsapp').value.trim(),
-                program: document.getElementById('tProgram').value,
-                timing: document.getElementById('tTiming').value
-            };
-
-            const alertEl = document.getElementById('trialAlert');
+        async function submitForm(type) {
             const t = dict[currentLang];
+            let payload = {};
+            let alertEl, btnEl, loaderEl;
 
-            if(!payload.parentName || !payload.studentName || !payload.whatsapp) {
-                alertEl.className = 'mb-4 p-3 bg-red-50 text-red-600 rounded-xl text-sm text-center font-bold block';
-                alertEl.innerText = t.msgTrialError;
-                return;
+            if (type === 'trial') {
+                alertEl = document.getElementById('trialAlert'); btnEl = document.getElementById('btnSubmitTrial'); loaderEl = document.getElementById('trialLoader');
+                payload = {
+                    action: 'submitTrialForm',
+                    parentName: document.getElementById('tParentName').value.trim(),
+                    studentName: document.getElementById('tChildName').value.trim(),
+                    age: document.getElementById('tAge').value.trim(),
+                    whatsapp: document.getElementById('tWhatsapp').value.trim(),
+                    program: document.getElementById('tProgram').value,
+                    timing: document.getElementById('tTiming').value
+                };
+                if(!payload.parentName || !payload.studentName || !payload.whatsapp) return showAlert(alertEl, t.msgError, 'error');
+            } else if (type === 'inquiry') {
+                alertEl = document.getElementById('inqAlert'); btnEl = document.getElementById('btnSubmitInq'); loaderEl = document.getElementById('inqLoader');
+                payload = {
+                    action: 'submitInquiryForm',
+                    name: document.getElementById('iName').value.trim(),
+                    whatsapp: document.getElementById('iWhatsapp').value.trim(),
+                    program: document.getElementById('iProgram').value,
+                    message: document.getElementById('iMessage').value.trim()
+                };
+                if(!payload.name || !payload.whatsapp) return showAlert(alertEl, t.msgError, 'error');
             }
 
-            document.getElementById('btnSubmitTrial').classList.add('hidden');
-            document.getElementById('trialLoader').classList.remove('hidden');
+            btnEl.classList.add('hidden'); loaderEl.classList.remove('hidden');
 
             try {
-                // Using text/plain (omitting Content-Type) prevents CORS preflight block in Apps Script
-                const res = await fetch(GAS_WEB_APP_URL, {
-                    method: 'POST', body: JSON.stringify(payload)
-                });
+                const res = await fetch(GAS_WEB_APP_URL, { method: 'POST', body: JSON.stringify(payload) });
                 const data = await res.json();
-                
-                alertEl.className = 'mb-4 p-4 bg-green-50 text-green-700 border border-green-200 rounded-xl text-sm text-center font-bold block';
-                alertEl.innerText = t.msgTrialSuccess;
-                
-                // Clear form
-                ['tParentName', 'tChildName', 'tAge', 'tWhatsapp'].forEach(id => document.getElementById(id).value = '');
-            } catch (err) {
-                alertEl.className = 'mb-4 p-3 bg-red-50 text-red-600 rounded-xl text-sm text-center font-bold block';
-                alertEl.innerText = t.errorNetwork;
-            } finally {
-                document.getElementById('btnSubmitTrial').classList.remove('hidden');
-                document.getElementById('trialLoader').classList.add('hidden');
-            }
+                showAlert(alertEl, t.msgSuccess, 'success');
+                // Clear fields
+                if(type==='trial'){ ['tParentName', 'tChildName', 'tAge', 'tWhatsapp'].forEach(id => document.getElementById(id).value = ''); }
+                if(type==='inquiry'){ ['iName', 'iWhatsapp', 'iMessage'].forEach(id => document.getElementById(id).value = ''); }
+            } catch (err) { showAlert(alertEl, t.errorNetwork, 'error'); } 
+            finally { btnEl.classList.remove('hidden'); loaderEl.classList.add('hidden'); }
         }
 
+        function showAlert(el, msg, status) {
+            el.className = `mb-4 p-3 rounded-xl text-sm text-center font-bold block ${status === 'error' ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-700 border border-green-200'}`;
+            el.innerText = msg;
+        }
+
+        // --- PORTAL LOGIC ---
         function switchTab(tab) {
-            document.getElementById('tabLogs').className = `flex-1 py-2.5 text-sm font-bold rounded-xl transition ${tab === 'logs' ? 'bg-white shadow-sm text-brand-red' : 'text-gray-500 hover:text-gray-800'}`;
-            document.getElementById('tabReports').className = `flex-1 py-2.5 text-sm font-bold rounded-xl transition ${tab === 'reports' ? 'bg-white shadow-sm text-brand-red' : 'text-gray-500 hover:text-gray-800'}`;
+            document.getElementById('tabLogs').className = `flex-1 py-2.5 text-sm font-bold rounded-xl transition ${tab === 'logs' ? 'bg-white shadow-sm text-brand-red' : 'text-gray-500 bg-gray-50 hover:bg-gray-100'}`;
+            document.getElementById('tabReports').className = `flex-1 py-2.5 text-sm font-bold rounded-xl transition ${tab === 'reports' ? 'bg-white shadow-sm text-brand-red' : 'text-gray-500 bg-gray-50 hover:bg-gray-100'}`;
             document.getElementById('logsContent').classList.toggle('hidden', tab !== 'logs');
             document.getElementById('reportsContent').classList.toggle('hidden', tab !== 'reports');
         }
@@ -347,17 +521,13 @@
                     loggedInStudentId = data.data.studentId;
                     document.getElementById('studentNameDisplay').innerText = data.data.studentName;
                     
-                    // Handle Join Class Button
                     const btnClass = document.getElementById('btnJoinClass');
                     if(data.data.classLink) {
                         btnClass.href = data.data.classLink.startsWith('http') ? data.data.classLink : 'https://' + data.data.classLink;
                         btnClass.classList.remove('hidden');
-                    } else {
-                        btnClass.classList.add('hidden');
-                    }
+                    } else btnClass.classList.add('hidden');
 
-                    showView('dashboard');
-                    fetchDashboardData(loggedInStudentId);
+                    showView('dashboard'); fetchDashboardData(loggedInStudentId);
                 } else showError(data.message);
             } catch (err) { showError(dict[currentLang].errorNetwork); }
             finally { setLoading(false, 'login'); }
@@ -376,13 +546,8 @@
         function toggleAccordion(id) {
             const el = document.getElementById(`acc-${id}`);
             const icon = document.getElementById(`icon-${id}`);
-            if (el.classList.contains('open')) {
-                el.classList.remove('open');
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                el.classList.add('open');
-                icon.style.transform = 'rotate(180deg)';
-            }
+            if (el.classList.contains('open')) { el.classList.remove('open'); icon.style.transform = 'rotate(0deg)'; } 
+            else { el.classList.add('open'); icon.style.transform = 'rotate(180deg)'; }
         }
 
         function renderLogs(logs) {
@@ -397,13 +562,10 @@
                 if(log.projectLink && log.projectLink.trim() !== "") {
                     let safeLink = log.projectLink.startsWith('http') ? log.projectLink : 'https://' + log.projectLink;
                     linkHtml = `<a href="${safeLink}" target="_blank" class="mt-4 flex justify-center items-center text-xs font-bold text-brand-darkred bg-brand-red/10 hover:bg-brand-red/20 py-2.5 rounded-xl transition w-full">
-                                    <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                                    ${t.viewProjectBtn}
-                                </a>`;
+                                    <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>${t.viewProjectBtn}</a>`;
                 }
-
                 html += `
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 mb-4 transition hover:shadow-md">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 mb-4 transition hover:border-brand-yellow">
                     <div class="flex justify-between items-start mb-3">
                         <span class="bg-brand-yellow/20 text-yellow-800 text-[10px] font-extrabold px-3 py-1.5 rounded-lg uppercase tracking-wider">${log.program || 'Class'}</span>
                         <span class="text-xs font-bold text-gray-400 bg-gray-50 px-2 py-1 rounded-md border border-gray-100">${log.date}</span>
@@ -420,8 +582,8 @@
                         <div id="acc-${i}" class="accordion-content">
                             <div class="pt-4 pb-2 space-y-4">
                                 ${log.projectName ? `<div><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">${t.projectLabel}</span><p class="text-sm text-gray-700 font-medium">${log.projectName}</p></div>` : ''}
-                                ${log.problemFaced ? `<div class="bg-red-50 p-3 rounded-xl border border-red-100"><span class="text-[10px] font-extrabold text-red-500 uppercase tracking-wider flex items-center mb-1"><svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>${t.problemLabel}</span><p class="text-sm text-gray-800 font-medium">${log.problemFaced}</p></div>` : ''}
-                                ${log.solution ? `<div class="bg-green-50 p-3 rounded-xl border border-green-100"><span class="text-[10px] font-extrabold text-green-600 uppercase tracking-wider flex items-center mb-1"><svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>${t.solutionLabel}</span><p class="text-sm text-gray-800 font-medium">${log.solution}</p></div>` : ''}
+                                ${log.problemFaced ? `<div class="bg-red-50 p-3 rounded-xl border border-red-100"><span class="text-[10px] font-extrabold text-red-500 uppercase tracking-wider flex items-center mb-1">⚠️ ${t.problemLabel}</span><p class="text-sm text-gray-800 font-medium">${log.problemFaced}</p></div>` : ''}
+                                ${log.solution ? `<div class="bg-green-50 p-3 rounded-xl border border-green-100"><span class="text-[10px] font-extrabold text-green-600 uppercase tracking-wider flex items-center mb-1">💡 ${t.solutionLabel}</span><p class="text-sm text-gray-800 font-medium">${log.solution}</p></div>` : ''}
                                 ${linkHtml}
                             </div>
                         </div>
@@ -442,21 +604,17 @@
                 html += `
                 <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 mb-5 relative overflow-hidden">
                     <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand-yellow to-brand-red"></div>
-                    <div class="border-b border-gray-50 pb-4 mb-4 mt-1">
-                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">${t.termLabel}</p>
-                        <h3 class="text-xl font-extrabold text-brand-darkred leading-tight mt-0.5">${r.term}</h3>
+                    <div class="border-b border-gray-50 pb-3 mb-4 mt-1 flex justify-between items-end">
+                        <div><p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">${t.termLabel}</p>
+                        <h3 class="text-xl font-extrabold text-brand-darkred leading-tight mt-0.5">${r.term}</h3></div>
+                        <div class="text-right"><p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">${t.enrolledLabel}</p>
+                        <p class="text-xs font-bold text-gray-600">${r.programs}</p></div>
                     </div>
-                    
-                    <p class="text-[11px] font-bold text-brand-red uppercase tracking-wider mb-2 flex items-center">
-                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                        ${t.summaryLabel}
-                    </p>
+                    <p class="text-[11px] font-bold text-brand-red uppercase tracking-wider mb-2 flex items-center">📝 ${t.summaryLabel}</p>
                     <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 text-gray-700 text-sm leading-relaxed mb-5 font-medium whitespace-pre-wrap">${r.summary}</div>
                     
                     ${r.url ? `<a href="${safeUrl}" target="_blank" class="flex justify-center items-center w-full bg-brand-red text-white font-bold py-3.5 rounded-xl hover:bg-brand-darkred transition text-sm shadow-md shadow-brand-red/20">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                        ${t.downloadBtn}
-                    </a>` : ''}
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>${t.downloadBtn}</a>` : ''}
                 </div>`;
             });
             container.innerHTML = html;
@@ -479,10 +637,13 @@
 
         function logout() {
             loggedInStudentId = null;
-            document.getElementById('studentIdInput').value = ''; document.getElementById('pinInput').value = '';
+            ['studentIdInput', 'pinInput'].forEach(id => document.getElementById(id).value = '');
             document.getElementById('loginError').classList.add('hidden');
             showView('landing');
         }
+
+        // Initialize Lang
+        applyLanguage();
     </script>
 </body>
 </html>
