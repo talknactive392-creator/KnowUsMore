@@ -383,7 +383,23 @@
             try {
                 await fetch(GAS_WEB_APP_URL, { method: 'POST', body: JSON.stringify(payload) });
                 showAlert(alertEl, t.msgSuccess, 'success');
-            } catch (err) { showAlert(alertEl, t.errorNetwork, 'error'); } 
+                
+                // Clear the form fields after successful submission
+                if (type === 'trial') {
+                    document.getElementById('tParentName').value = '';
+                    document.getElementById('tChildName').value = '';
+                    document.getElementById('tAge').value = '';
+                    document.getElementById('tWhatsapp').value = '';
+                    document.getElementById('tProgram').selectedIndex = 0;
+                    document.getElementById('tTiming').selectedIndex = 0;
+                } else if (type === 'inquiry') {
+                    document.getElementById('iName').value = '';
+                    document.getElementById('iWhatsapp').value = '';
+                    document.getElementById('iMessage').value = '';
+                    document.getElementById('iProgram').selectedIndex = 0;
+                }
+                
+            } catch (err) { showAlert(alertEl, t.errorNetwork, 'error'); } } 
             finally { btnEl.classList.remove('hidden'); loaderEl.classList.add('hidden'); }
         }
 
